@@ -16,7 +16,7 @@ export default function Example() {
             .then(response => {
                 localStorage.setItem('token', response.data.token)
                 axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
-                navigate('/courses')
+                navigate('/dashboard')
             })
             .catch(error => {
                 if (error.response.status === 422) {

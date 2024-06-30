@@ -19,8 +19,6 @@ export default function Example() {
                 navigate('/courses')
             })
             .catch(error => {
-                console.log('{ email: email, password: password }')
-                console.log({email: email, password: password})
                 if (error.response.status === 422) {
                     setErrorMessage(error.response.data.message)
                 }

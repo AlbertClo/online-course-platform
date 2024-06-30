@@ -8,21 +8,9 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/login', function (Request $request) {
-    if (! Auth::attempt($request->only('email', 'password'))) {
-        return response(['message' => __('auth.failed')], 422);
-    }
-
-    $token = auth()->user()->createToken('client');
-
-    return ['token' => $token->plainTextToken];
-});
-
-Route::middleware('auth:sanctum')->post('/logout', function (Request $request) {
-    $request->user()->currentAccessToken()->delete();
-
-    return response()->noContent();
-});
+Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
+Route::post('/register', [App\Http\Controllers\AuthController::class, 'register']);
+Route::middleware('auth:sanctum')->post('/logout', [App\Http\Controllers\AuthController::class, 'logout']);
 
 Route::middleware('auth:sanctum')->get('/courses', function (Request $request) {
     return \App\Models\Course::get();

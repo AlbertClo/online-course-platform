@@ -1,47 +1,28 @@
-export default function Index() {
+import axios from "axios";
+import {useEffect, useState} from "react";
+import {Link} from "react-router-dom";
 
-    const courses = [
-        {
-            id: 1,
-            name: 'Jane Cooper',
-            title: 'Paradigm Representative',
-            role: 'Admin',
-            imageUrl:
-                'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-        },
-        {
-            id: 2,
-            name: 'Jane Cooper',
-            title: 'Paradigm Representative',
-            role: 'Admin',
-            imageUrl:
-                'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-        },
-        {
-            id: 3,
-            name: 'Jane Cooper',
-            title: 'Paradigm Representative',
-            role: 'Admin',
-            imageUrl:
-                'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-        },
-        {
-            id: 4,
-            name: 'Jane Cooper',
-            title: 'Paradigm Representative',
-            role: 'Admin',
-            imageUrl:
-                'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-        },
-        {
-            id: 5,
-            name: 'Jane Cooper',
-            title: 'Paradigm Representative',
-            role: 'Admin',
-            imageUrl:
-                'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-        },
-    ]
+export default function Index() {
+    const [courses, setCourses] = useState([])
+
+    useEffect(() => {
+        axios.get('/courses')
+            .then(response => {
+                console.log(response.data);
+                setCourses(response.data.data);
+                console.log(courses)
+            })
+            .catch(error => {
+                // if (error.response.status === 422) {
+                //     setErrorMessage(error.response.data.message)
+                // }
+            })
+
+    }, []);
+
+    const getImageUrl = (image) => {
+        return import.meta.env.VITE_BACKEND_ASSETS_BASE_URL + image;
+    }
 
     return (
         <div className="relative isolate pt-14">
@@ -70,31 +51,26 @@ export default function Index() {
                     </div>
 
                     <ul role="list" className="mt-10 flex flex-wrap justify-center gap-4">
-                        {courses.map((course) => (
+                        {Array.isArray(courses) && courses.map((course) => (
                             <li
                                 key={course.id}
                                 className="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow"
                             >
                                 <div className="flex flex-1 flex-col p-8 ">
                                     <img className="mx-auto md:h-50 md:w-50 md:h-80 md:w-80 flex-shrink-0 rounded-full"
-                                         src={course.imageUrl}
+                                         src={getImageUrl(course.image)}
                                          alt=""/>
-                                    <h3 className="mt-6 text-sm font-medium text-gray-900">{course.name}</h3>
-                                    <dl className="mt-1 flex flex-grow flex-col justify-between">
-                                        <dt className="sr-only">Title</dt>
-                                        <dd className="text-sm text-gray-500">{course.title}</dd>
-                                        <dd className="mt-3">
-                                        </dd>
-                                    </dl>
-                                    <div className="flex flex-row justify-center">
-                                        <button
+                                    <h3 className="mt-6 text-sm font-medium text-slate-600">{course.name}</h3>
+                                    <div className="flex flex-row justify-center mt-4">
+                                        <Link
+                                            to={`/dashboard/courses/${course.id}`}
                                             type="button"
                                             className="w-32 rounded-md bg-sky-300 px-3.5 py-2.5 text-sm font-semibold text-white
                                         shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2
                                         focus-visible:outline-offset-2 focus-visible:outline-sky-300"
                                         >
                                             View course
-                                        </button>
+                                        </Link>
                                     </div>
                                 </div>
                             </li>

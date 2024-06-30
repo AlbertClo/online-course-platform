@@ -5,7 +5,6 @@ import Login from './pages/Login.tsx';
 import Register from './pages/Register.tsx';
 import DashboardIndex from './pages/dashboard/DashboardIndex.tsx';
 import Course from './pages/dashboard/Course.tsx';
-
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import {
@@ -15,6 +14,14 @@ import {
 import "./index.css";
 import DashboardLayout from "./layouts/DashboardLayout.tsx";
 import AdminIndex from "./pages/admin/AdminIndex.tsx";
+import axios from "axios";
+
+axios.defaults.headers.post['Content-Type'] = 'application/json';
+axios.defaults.baseURL = import.meta.env.VITE_BACKEND_API_BASE_URL;
+
+if (localStorage.getItem('token')) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`
+}
 
 const router = createBrowserRouter([
     {

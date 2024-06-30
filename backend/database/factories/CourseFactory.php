@@ -36,6 +36,7 @@ class CourseFactory extends Factory
 
         return [
             'name' => $name,
+            'description' => fake()->sentence(),
             'image' => $imageRelativePath
         ];
     }

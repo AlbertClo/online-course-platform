@@ -81,7 +81,7 @@ export default function Index() {
                                     </dl>
                                     <div className="flex flex-row justify-center">
                                         <Link
-                                            to={`/courses/${course.id}`}
+                                            to={`/dashboard/courses/${course.id}`}
                                             type="button"
                                             className="w-32 rounded-md bg-sky-300 px-3.5 py-2.5 text-sm font-semibold text-white
                                         shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2

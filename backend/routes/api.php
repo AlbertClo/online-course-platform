@@ -17,4 +17,5 @@ Route::middleware(['auth:sanctum'])->post('/courses', [App\Http\Controllers\Cour
 Route::middleware(['auth:sanctum'])->put('/courses/{course}', [App\Http\Controllers\CoursesController::class, 'update']);
 Route::middleware(['auth:sanctum'])->delete('/courses/{course}', [App\Http\Controllers\CoursesController::class, 'destroy']);
 
-Route::middleware(['auth:sanctum'])->post('/courses/{course}/register', [App\Http\Controllers\CoursesController::class, 'register']);
+Route::middleware(['auth:sanctum'])->get('/dashboard/courses', [App\Http\Controllers\DashboardController::class, 'listCourses']);
+Route::middleware(['auth:sanctum'])->post('/courses/{course}/register', [App\Http\Controllers\DashboardController::class, 'register']);

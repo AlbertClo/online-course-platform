@@ -16,6 +16,7 @@ class CourseResource extends JsonResource
             'name' => $this->name,
             'description' => $this->description,
             'image' => $this->image,
+            'registration_count' => $this->registration_count ?? null,
         ];
     }
 }

@@ -44,10 +44,9 @@ export default function Index() {
                         <h1 className="text-4xl font-bold tracking-tight text-indigo-600 sm:text-6xl">
                             Crypto<span className="text-sky-500">School</span>
                         </h1>
-                        <p className="mt-6 text-lg leading-8 text-slate-700">
+                        <p className="mt-6 text-lg leading-8 text-slate-500 font-bold">
                             Become a crypto trading pro.<br/>For Free.
                         </p>
-
                     </div>
 
                     <ul role="list" className="mt-10 flex flex-wrap justify-center gap-4">

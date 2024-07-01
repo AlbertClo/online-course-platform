@@ -55,15 +55,4 @@ class CoursesController extends Controller
 
         return new JsonResponse(['message' => 'Course deleted'], 200);
     }
-
-    public function register(Request $request, $courseId)
-    {
-        $course = Course::find($courseId);
-        if ($course->users()->where('user_id', $request->user()->id)->exists()) {
-            return new JsonResponse(['message' => "You're already registered for {$course->name}"], 422);
-        }
-
-        $course->users()->attach($request->user()->id);
-        return new JsonResponse(['message' => "You now registered for {$course->name}"], 200);
-    }
 }

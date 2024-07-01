@@ -73,7 +73,7 @@ export default function Index() {
                         </div>
 
                         <div className="flex flex-1 flex-col p-8 ">
-                            <img className="mx-auto md:h-50 md:w-50 md:h-80 md:w-80 flex-shrink-0 rounded-full"
+                            <img className="mx-auto md:h-50 md:w-50 md:h-80 md:w-80 flex-shrink-0 rounded-lg"
                                  src={getImageUrl(course.image)}
                                  alt=""/>
                             <dl className="mt-1 flex flex-grow flex-col justify-center text-center">

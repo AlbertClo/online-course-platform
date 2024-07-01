@@ -6,7 +6,7 @@ export default function Index() {
     const [courses, setCourses] = useState([])
 
     useEffect(() => {
-        axios.get('/courses')
+        axios.get('/dashboard/courses')
             .then(response => {
                 console.log(response.data);
                 setCourses(response.data.data);
@@ -44,10 +44,9 @@ export default function Index() {
                         <h1 className="text-4xl font-bold tracking-tight text-indigo-600 sm:text-6xl">
                             Crypto<span className="text-sky-500">School</span>
                         </h1>
-                        <p className="mt-6 text-lg leading-8 text-slate-700">
+                        <p className="mt-6 text-lg leading-8 text-slate-500 font-bold">
                             Become a crypto trading pro.<br/>For Free.
                         </p>
-
                     </div>
 
                     <ul role="list" className="mt-10 flex flex-wrap justify-center gap-4">
@@ -56,10 +55,21 @@ export default function Index() {
                                 key={course.id}
                                 className="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow"
                             >
-                                <div className="flex flex-1 flex-col p-8 ">
-                                    <img className="mx-auto md:h-50 md:w-50 md:h-80 md:w-80 flex-shrink-0 rounded-full"
-                                         src={getImageUrl(course.image)}
-                                         alt=""/>
+                                <div className="flex flex-1 flex-col p-8">
+                                    <div className="relative">
+                                        <img className="mx-auto md:h-50 md:w-50 md:h-80 md:w-80 flex-shrink-0 rounded-md"
+                                             src={getImageUrl(course.image)}
+                                             alt=""/>
+                                        <div
+                                            className="mt-4 px-2 py-1 text-slate-600 rounded-tl-sm rounded-br-sm absolute bg-slate-600 text-slate-100 right-0 bottom-0 opacity-75 text-sm flex flex-row">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                 fill="currentColor" className="size-5 mr-2">
+                                                <path
+                                                    d="M4.5 6.375a4.125 4.125 0 1 1 8.25 0 4.125 4.125 0 0 1-8.25 0ZM14.25 8.625a3.375 3.375 0 1 1 6.75 0 3.375 3.375 0 0 1-6.75 0ZM1.5 19.125a7.125 7.125 0 0 1 14.25 0v.003l-.001.119a.75.75 0 0 1-.363.63 13.067 13.067 0 0 1-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 0 1-.364-.63l-.001-.122ZM17.25 19.128l-.001.144a2.25 2.25 0 0 1-.233.96 10.088 10.088 0 0 0 5.06-1.01.75.75 0 0 0 .42-.643 4.875 4.875 0 0 0-6.957-4.611 8.586 8.586 0 0 1 1.71 5.157v.003Z"/>
+                                            </svg>
+                                            {course.registration_count}
+                                        </div>
+                                    </div>
                                     <h3 className="mt-6 text-sm font-medium text-slate-600">{course.name}</h3>
                                     <div className="flex flex-row justify-center mt-4">
                                         <Link

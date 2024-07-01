@@ -13,7 +13,6 @@ import {
 } from "react-router-dom";
 import "./index.css";
 import DashboardLayout from "./layouts/DashboardLayout.tsx";
-import AdminIndex from "./pages/admin/AdminIndex.tsx";
 import axios from "axios";
 
 axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -32,12 +31,12 @@ const router = createBrowserRouter([
             {index: true, element: <Index/>},
             {
                 path: "login",
-                element: <Login />,
+                element: <Login/>,
             },
             {index: true, element: <DashboardIndex/>},
             {
                 path: "register",
-                element: <Register />,
+                element: <Register/>,
             },
         ],
     },
@@ -45,19 +44,13 @@ const router = createBrowserRouter([
         path: "/dashboard",
         element: <DashboardLayout/>,
         children: [
-            {index: true, element: <DashboardIndex />},
+            {index: true, element: <DashboardIndex/>},
             {
                 path: "courses/:id",
-                element: <Course />,
+                element: <Course/>,
             },
         ],
-    },
-    {
-        path: "/admin",
-        element: <DashboardLayout/>,
-        children: [
-            {index: true, element: <AdminIndex />},
-        ],
+
     },
 ]);
 

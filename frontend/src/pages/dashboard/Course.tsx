@@ -21,6 +21,18 @@ export default function Index() {
 
     }, []);
 
+    const registerForCourse = () => {
+        axios.post(`/courses/${id}/register`)
+            .then(response => {
+                console.log(response.data);
+            })
+            .catch(error => {
+                if (error.response.status === 422) {
+                    console.error('error')
+                }
+            })
+    }
+
     const getImageUrl = (image) => {
         return import.meta.env.VITE_BACKEND_ASSETS_BASE_URL + image;
     }
@@ -60,6 +72,7 @@ export default function Index() {
                             <div className="flex flex-row justify-center">
                                 <button
                                     type="button"
+                                    onClick={registerForCourse}
                                     className="w-32 rounded-md bg-sky-300 px-3.5 py-2.5 text-sm font-semibold text-white
                                         shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2
                                         focus-visible:outline-offset-2 focus-visible:outline-sky-300 mt-4"

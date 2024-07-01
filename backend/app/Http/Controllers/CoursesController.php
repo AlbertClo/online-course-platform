@@ -26,9 +26,9 @@ class CoursesController extends Controller
         return new CourseResource($course);
     }
 
-    public function store(StoreCourseRequest $request, StoreCourseAction $action): JsonResponse
+    public function store(StoreCourseRequest $request, StoreCourseAction $storeCourseAction): JsonResponse
     {
-        $action->handle(new StoreCourseDto(
+        $storeCourseAction->handle(new StoreCourseDto(
             $request->name,
             $request->description,
             $request->image,
@@ -37,9 +37,9 @@ class CoursesController extends Controller
         return new JsonResponse(['message' => 'Course created'], 201);
     }
 
-    public function update(UpdateCourseRequest $request, UpdateCourseAction $action, int $courseId): JsonResponse
+    public function update(UpdateCourseRequest $request, UpdateCourseAction $updateCourseAction, int $courseId): JsonResponse
     {
-        $action->handle(new UpdateCourseDto(
+        $updateCourseAction->handle(new UpdateCourseDto(
             $courseId,
             $request->name,
             $request->description,
@@ -49,10 +49,21 @@ class CoursesController extends Controller
         return new JsonResponse(['message' => 'Course updated'], 200);
     }
 
-    public function destroy(Request $request, DestroyCourseAction $action, Course $course): JsonResponse
+    public function destroy(Request $request, DestroyCourseAction $destroyCourseAction, Course $course): JsonResponse
     {
-        $action->handle($course->id);
+        $destroyCourseAction->handle($course->id);
 
         return new JsonResponse(['message' => 'Course deleted'], 200);
+    }
+
+    public function register(Request $request, $courseId)
+    {
+        $course = Course::find($courseId);
+        if ($course->users()->where('user_id', $request->user()->id)->exists()) {
+            return new JsonResponse(['message' => "You're already registered for {$course->name}"], 422);
+        }
+
+        $course->users()->attach($request->user()->id);
+        return new JsonResponse(['message' => "You now registered for {$course->name}"], 200);
     }
 }

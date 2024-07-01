@@ -8,7 +8,7 @@ For more in depth information about Laravel Sail, see the official [documentatio
 Sail requires your environment variables to be set up. It uses your database username and password specified to set up
 the MySQL database among other things. So if you don't have your .env file created yet, copy the example .env file.
 ```
-cd frontend
+cd backend
 cp .env.exmple .env
 ```
 

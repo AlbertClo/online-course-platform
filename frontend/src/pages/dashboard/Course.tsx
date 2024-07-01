@@ -1,13 +1,29 @@
-export default function Index() {
+import {useEffect, useState} from "react";
+import axios from "axios";
+import {useParams} from "react-router-dom";
 
-    const course = {
-        id: 1,
-        name: 'Jane Cooper',
-        title: 'Paradigm Representative',
-        role: 'Admin',
-        imageUrl:
-            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-    };
+export default function Index() {
+    const {id} = useParams()
+    const [course, setCourse] = useState()
+
+    useEffect(() => {
+        axios.get(`/courses/${id}`)
+            .then(response => {
+                console.log(response.data);
+                setCourse(response.data);
+                console.log(course)
+            })
+            .catch(error => {
+                // if (error.response.status === 422) {
+                //     setErrorMessage(error.response.data.message)
+                // }
+            })
+
+    }, []);
+
+    const getImageUrl = (image) => {
+        return import.meta.env.VITE_BACKEND_ASSETS_BASE_URL + image;
+    }
 
     return (
         <div className="relative isolate pt-14">
@@ -23,36 +39,37 @@ export default function Index() {
                     }}
                 />
             </div>
-            <div className="py-24 sm:py-32 lg:pb-40">
-                <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                    <div className="mx-auto max-w-2xl text-center">
-                        <h1 className="text-4xl font-bold tracking-tight text-indigo-600 sm:text-6xl">
-                            {course.name}
-                        </h1>
-                    </div>
+            {course && (
+                <div className="py-24 sm:py-32 lg:pb-40">
+                    <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                        <div className="mx-auto max-w-2xl text-center">
+                            <h1 className="text-4xl font-bold tracking-tight text-indigo-600 sm:text-6xl">
+                                {course.name}
+                            </h1>
+                        </div>
 
-                    <div className="flex flex-1 flex-col p-8 ">
-                        <img className="mx-auto md:h-50 md:w-50 md:h-80 md:w-80 flex-shrink-0 rounded-full"
-                             src={course.imageUrl}
-                             alt=""/>
-                        <dl className="mt-1 flex flex-grow flex-col justify-center text-center">
-                            <dd className="text-sm text-gray-500 text-center">{course.title}</dd>
-                            <dd className="mt-3">
-                            </dd>
-                        </dl>
-                        <div className="flex flex-row justify-center">
-                            <button
-                                type="button"
-                                className="w-32 rounded-md bg-sky-300 px-3.5 py-2.5 text-sm font-semibold text-white
+                        <div className="flex flex-1 flex-col p-8 ">
+                            <img className="mx-auto md:h-50 md:w-50 md:h-80 md:w-80 flex-shrink-0 rounded-full"
+                                 src={getImageUrl(course.image)}
+                                 alt=""/>
+                            <dl className="mt-1 flex flex-grow flex-col justify-center text-center">
+                                <dd className="text-lg text-gray-500 text-center mt-6">{course.description}</dd>
+                                <dd className="mt-3">
+                                </dd>
+                            </dl>
+                            <div className="flex flex-row justify-center">
+                                <button
+                                    type="button"
+                                    className="w-32 rounded-md bg-sky-300 px-3.5 py-2.5 text-sm font-semibold text-white
                                         shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2
-                                        focus-visible:outline-offset-2 focus-visible:outline-sky-300"
-                            >
-                                Register
-                            </button>
+                                        focus-visible:outline-offset-2 focus-visible:outline-sky-300 mt-4"
+                                >
+                                    Register
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </div>)}
             <div
                 className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
                 aria-hidden="true"

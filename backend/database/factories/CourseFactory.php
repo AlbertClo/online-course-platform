@@ -29,7 +29,7 @@ class CourseFactory extends Factory
             File::makeDirectory($path, 0777, true, true);
         }
 
-        $name = ucfirst(implode(fake()->words(3)));
+        $name = ucfirst(implode(' ', fake()->words(3)));
 
         $imagePath = fake()->image($path, 200, 200, null);
         $imageRelativePath = substr($imagePath, strpos($path, '/storage'));

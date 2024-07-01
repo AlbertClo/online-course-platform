@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link, Outlet } from "react-router-dom";
+import { Toaster } from "@/components/ui/toaster"
 
 const navigation = [
     { name: 'List courses', href: '/dashboard' },

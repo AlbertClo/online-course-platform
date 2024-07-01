@@ -1,22 +1,26 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {useParams} from "react-router-dom";
+import { useToast } from "@/components/ui/use-toast"
+import {Toaster} from "@/components/ui/toaster.tsx";
+
 
 export default function Index() {
     const {id} = useParams()
     const [course, setCourse] = useState()
+    const { toast } = useToast()
 
     useEffect(() => {
         axios.get(`/courses/${id}`)
             .then(response => {
-                console.log(response.data);
                 setCourse(response.data);
-                console.log(course)
             })
             .catch(error => {
-                // if (error.response.status === 422) {
-                //     setErrorMessage(error.response.data.message)
-                // }
+                toast({
+                    title: `Couldn't fetch course data`,
+                    description: `There was an unknown error fetching course data. Please try again later.`,
+                    variant: "destructive"
+                })
             })
 
     }, []);
@@ -24,11 +28,19 @@ export default function Index() {
     const registerForCourse = () => {
         axios.post(`/courses/${id}/register`)
             .then(response => {
-                console.log(response.data);
+                toast({
+                    title: `Course registration successful`,
+                    description: `You are now registered for ${course.name}!`,
+                    variant: "primary"
+                })
             })
             .catch(error => {
                 if (error.response.status === 422) {
-                    console.error('error')
+                    toast({
+                        title: "Course registration error",
+                        description: `You are already registered for ${course.name}!`,
+                        variant: "destructive"
+                    })
                 }
             })
     }
@@ -79,6 +91,7 @@ export default function Index() {
                                 >
                                     Register
                                 </button>
+                                <Toaster />
                             </div>
                         </div>
                     </div>

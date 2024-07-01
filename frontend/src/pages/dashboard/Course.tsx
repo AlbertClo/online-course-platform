@@ -1,14 +1,14 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {useParams} from "react-router-dom";
-import { useToast } from "@/components/ui/use-toast"
+import {useToast} from "@/components/ui/use-toast"
 import {Toaster} from "@/components/ui/toaster.tsx";
 
 
 export default function Index() {
     const {id} = useParams()
     const [course, setCourse] = useState()
-    const { toast } = useToast()
+    const {toast} = useToast()
 
     useEffect(() => {
         axios.get(`/courses/${id}`)
@@ -63,39 +63,52 @@ export default function Index() {
                     }}
                 />
             </div>
-            {course && (
-                <div className="py-24 sm:py-32 lg:pb-40">
-                    <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                        <div className="mx-auto max-w-2xl text-center">
-                            <h1 className="text-4xl font-bold tracking-tight text-indigo-600 sm:text-6xl">
-                                {course.name}
-                            </h1>
-                        </div>
 
-                        <div className="flex flex-1 flex-col p-8 ">
-                            <img className="mx-auto md:h-50 md:w-50 md:h-80 md:w-80 flex-shrink-0 rounded-lg"
-                                 src={getImageUrl(course.image)}
-                                 alt=""/>
-                            <dl className="mt-1 flex flex-grow flex-col justify-center text-center">
-                                <dd className="text-lg text-gray-500 text-center mt-6">{course.description}</dd>
-                                <dd className="mt-3">
-                                </dd>
-                            </dl>
-                            <div className="flex flex-row justify-center">
-                                <button
-                                    type="button"
-                                    onClick={registerForCourse}
-                                    className="w-32 rounded-md bg-sky-300 px-3.5 py-2.5 text-sm font-semibold text-white
+            <div className="py-24 sm:py-32 lg:pb-40">
+                <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                    {course ? (
+                        <>
+                            <div className="mx-auto max-w-2xl text-center">
+                                <h1 className="text-4xl font-bold tracking-tight text-indigo-600 sm:text-6xl">
+                                    {course.name}
+                                </h1>
+                            </div>
+
+                            <div className="flex flex-1 flex-col p-8 ">
+                                <img className="mx-auto md:h-50 md:w-50 md:h-80 md:w-80 flex-shrink-0 rounded-lg"
+                                     src={getImageUrl(course.image)}
+                                     alt=""/>
+                                <dl className="mt-1 flex flex-grow flex-col justify-center text-center">
+                                    <dd className="text-lg text-gray-500 text-center mt-6">{course.description}</dd>
+                                    <dd className="mt-3">
+                                    </dd>
+                                </dl>
+                                <div className="flex flex-row justify-center">
+                                    <button
+                                        type="button"
+                                        onClick={registerForCourse}
+                                        className="w-32 rounded-md bg-sky-300 px-3.5 py-2.5 text-sm font-semibold text-white
                                         shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2
                                         focus-visible:outline-offset-2 focus-visible:outline-sky-300 mt-4"
-                                >
-                                    Register
-                                </button>
-                                <Toaster />
+                                    >
+                                        Register
+                                    </button>
+                                    <Toaster/>
+                                </div>
                             </div>
+                        </>
+                    ) : (
+                        <div className="w-full mt-32 flex flex-row justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                 className="size-6 animate-spin">
+                                <path fill-rule="evenodd"
+                                      d="M4.755 10.059a7.5 7.5 0 0 1 12.548-3.364l1.903 1.903h-3.183a.75.75 0 1 0 0 1.5h4.992a.75.75 0 0 0 .75-.75V4.356a.75.75 0 0 0-1.5 0v3.18l-1.9-1.9A9 9 0 0 0 3.306 9.67a.75.75 0 1 0 1.45.388Zm15.408 3.352a.75.75 0 0 0-.919.53 7.5 7.5 0 0 1-12.548 3.364l-1.902-1.903h3.183a.75.75 0 0 0 0-1.5H2.984a.75.75 0 0 0-.75.75v4.992a.75.75 0 0 0 1.5 0v-3.18l1.9 1.9a9 9 0 0 0 15.059-4.035.75.75 0 0 0-.53-.918Z"
+                                      clip-rule="evenodd"/>
+                            </svg>
                         </div>
-                    </div>
-                </div>)}
+                    )}
+                </div>
+            </div>
             <div
                 className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
                 aria-hidden="true"

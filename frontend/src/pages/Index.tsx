@@ -56,10 +56,10 @@ export default function Index() {
                                 className="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow"
                             >
                                 <div className="flex flex-1 flex-col p-8 ">
-                                    <img className="mx-auto md:h-50 md:w-50 md:h-80 md:w-80 flex-shrink-0 rounded-full"
+                                    <img className="mx-auto md:h-50 md:w-50 md:h-80 md:w-80 flex-shrink-0 rounded-md"
                                          src={getImageUrl(course.image)}
                                          alt=""/>
-                                    <h3 className="mt-6 text-sm font-medium text-slate-600">{course.name}</h3>
+                                    <h3 className="mt-6 text-lg font-medium text-slate-500 font-bold">{course.name}</h3>
                                     <div className="flex flex-row justify-center mt-4">
                                         <Link
                                             to={`/dashboard/courses/${course.id}`}

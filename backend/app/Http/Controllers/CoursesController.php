@@ -23,6 +23,8 @@ class CoursesController extends Controller
 
     public function show(Request $request, Course $course)
     {
+        sleep(1); // Simulate slow request to show loading state
+
         return new CourseResource($course);
     }
 

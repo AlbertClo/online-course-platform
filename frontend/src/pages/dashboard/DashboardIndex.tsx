@@ -61,7 +61,8 @@ export default function Index() {
                                              src={getImageUrl(course.image)}
                                              alt=""/>
                                         <div
-                                            className="mt-4 px-2 py-1 text-slate-600 rounded-tl-sm rounded-br-sm absolute bg-slate-600 text-slate-100 right-0 bottom-0 opacity-75 text-sm flex flex-row">
+                                            className="mt-4 px-2 py-1 text-slate-600 rounded-tl-sm rounded-br-sm absolute
+                                            bg-slate-600 text-white right-0 bottom-0 opacity-75 text-sm flex flex-row">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                                  fill="currentColor" className="size-5 mr-2">
                                                 <path

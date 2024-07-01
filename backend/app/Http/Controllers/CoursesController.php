@@ -18,7 +18,13 @@ class CoursesController extends Controller
 {
     public function index(Request $request)
     {
-        return CourseResource::collection(Course::all());
+        // We cache the response because it's called from the home page, so it will be called a lot.
+        // This way we avoid hitting the database on every request.
+        // We cache it forever, so this means we need to manually re-cache it whenever a new course is created, updated or deleted.
+        // This way fresh data will always be shown to the user, rather than having stale data for the time of the ttl.
+        return cache()->rememberForever('coursesResponse', function () {
+            return CourseResource::collection(Course::all());
+        });
     }
 
     public function show(Request $request, Course $course)
@@ -36,6 +42,12 @@ class CoursesController extends Controller
             $request->image,
         ));
 
+        // Re-cache the courses response
+        cache()->forget('coursesResponse');
+        cache()->rememberForever('coursesResponse', function () {
+            return CourseResource::collection(Course::all());
+        });
+
         return new JsonResponse(['message' => 'Course created'], 201);
     }
 
@@ -48,12 +60,24 @@ class CoursesController extends Controller
             $request->image,
         ));
 
+        // Re-cache the courses response
+        cache()->forget('coursesResponse');
+        cache()->rememberForever('coursesResponse', function () {
+            return CourseResource::collection(Course::all());
+        });
+
         return new JsonResponse(['message' => 'Course updated'], 200);
     }
 
     public function destroy(Request $request, DestroyCourseAction $destroyCourseAction, Course $course): JsonResponse
     {
         $destroyCourseAction->handle($course->id);
+
+        // Re-cache the courses response
+        cache()->forget('coursesResponse');
+        cache()->rememberForever('coursesResponse', function () {
+            return CourseResource::collection(Course::all());
+        });
 
         return new JsonResponse(['message' => 'Course deleted'], 200);
     }
